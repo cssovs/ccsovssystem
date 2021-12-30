@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Online Voting System - Dashboard{% endblock %} {% block content %}
+<div class="container">
+    <!-- party user task -->
+    <div class="pt-3">
+        {% if user_detail.party_leader_task and user_detail.party_leader_task != 'No Upcomming Election' and not user_detail.vote_notification|first in 'Election' %}
+        <div class="alert alert-warning" role="alert">
+            {{ user_detail.party_leader_task|safe }}
+        </div>
+        {% endif %}
+
+        <!-- notification section -->
+        {% if user_detail.vote_notification and user_detail.vote_notification != 'No Upcomming Election' %}
+        <div class="alert alert-info" role="alert">
+            {{ user_detail.vote_notification|safe }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div>
+        <!-- news feed -->
+        <div class="row">
+            {% for post in newsfeed %}
+            <div class="card"" style=" margin-bottom: 15px;">
+                <a href="/viewpost?pid={{ post.id }}" style="text-decoration: none;color: black;">
+                    <div class="card-body">
+                        <div class="d-flex flex-row align-items-center"> 
+                            <!-- <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle" style="margin-right: 15px;"> -->
+                            <div class="d-flex flex-column ml-2"> 
+                                <span class="font-weight-bold">{{ post.created_by }}</span> 
+                                <small class="text-primary">{{ post.created_at }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <i style="margin-bottom: 10px;">{{ post.title }}</i>
+                    {% if post.banner %}
+                        <a href="{{ post.banner.url }}">
+                            <img class="card-img-top" src="{{ post.banner.url }}" style="height: 400px;">
+                        </a>
+                    {% endif %}
+                    {% if post.videofile %}
+                        <div class="row">
+                            <video width="100%"; height="auto" controls>
+                                <source src='{{ post.videofile.url }}' type='video/mp4'>Your browser does not support the video tag.</video>
+                        </div>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- pagination -->
+    {% if newsfeed.has_other_pages %}
+    <ul class="pagination">
+        {% if newsfeed.has_previous %}
+        <li><a href="?page={{ newsfeed.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in newsfeed.paginator.page_range %}
+        {% if newsfeed.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if newsfeed.has_next %}
+        <li><a href="?page={{ newsfeed.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+</div>
+
+{% endblock %}

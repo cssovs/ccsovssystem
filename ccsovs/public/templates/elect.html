@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Online Voting System{% endblock %} 
+{% block content %}
+<h1>Elect Officials for {{party|safe}} Party</h1>   
+    <form action="." method="POST">
+        {% csrf_token %}
+        {% for position in positions %}
+            <div class="form-group">
+                <label for="{{position|safe}}">{{position|safe}}</label>
+                <select name="{{position.pk|safe}}" id="{{position|safe}}">
+                    <option value=""></option>
+                    {% for member in members %}
+                        <option value="{{member.pk|safe}}">{{member|safe}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+
+        <input type="submit" class="btn btn-primary btn-sm" value="Login">
+    </form>
+{% endblock %}

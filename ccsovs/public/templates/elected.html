@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Online Voting System - Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row"">
+        <h4  style="margin-top: 10px;">Election Result for S.Y - {{election}}</h4>
+        <div class="card"" style=" margin-bottom: 15px;margin-top: 20px;border: none;">
+            {% for key, values in total.items %}
+            <h5>{{key}}</h5>
+
+            <table style="width:40%;margin-bottom: 50px;"> 
+                {% for item in values %}
+                <tr>
+                    <td style="width:70%">{{item.student|title}}</td>
+                    <td style="width:30%"><b>{{item.vote_count}}</b></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

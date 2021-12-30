@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Online Voting System - Candidates{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="list-group">
+        {% for candidate in candidates %}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{candidate.position|safe}} : {{candidate.student|safe}}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %}Online Voting System - Candidates{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-info" role="alert">
+        You may select the candidate to see the profile.
+    </div>
+    {% regroup candidates|dictsort:"position.name" by position.name as plist %}
+
+    <form action="." method="POST">
+        {% csrf_token %}
+        <ul>
+            {% for p in plist %}
+            <li>
+                <fieldset id="{{ p.grouper }}">
+                    {{ p.grouper }}
+                    <ul>
+                        {% for c in p.list %}
+                        <li>
+                            <input type="radio" class="form-check-input" value="{{c.student.pk}}" name="{{ p.grouper }}" />
+                            <label class="form-check-label" for="{{c.student}}">
+                                <a href="profile?id={{c.student.id}}&pid={{c.party.id}}&eid={{c.election.id}}" target="_blank">{{c.student}}</a> - {{c.party}}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </fieldset>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+    </form>
+</div>
+{% endblock %}

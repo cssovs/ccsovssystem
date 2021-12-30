@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Online Voting System - Dashboard{% endblock %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card"" style=" margin-bottom: 15px;margin-top: 20px;">
+            <div class="card-body">
+                <div class="d-flex flex-row align-items-center"> 
+                    <!-- <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle" style="margin-right: 15px;"> -->
+                    <div class="d-flex flex-column ml-2"> 
+                        <span class="font-weight-bold">{{ post.created_by }}</span> 
+                        <small class="text-primary">{{ post.created_at }}</small>
+                        <small class="text-secondary"> {{ post.title }}</small>
+                    </div>
+                </div>
+            </div>
+            {{ post.content | safe}}
+            {% if post.banner %}
+                <a href="{{ post.banner.url }}">
+                    <img class="card-img-top" src="{{ post.banner.url }}" style="height: 400px;">
+                </a>
+            {% endif %}
+            {% if post.videofile %}
+            <div class="row">
+                <video width="100%"; height="auto" controls>
+                    <source src='{{ post.videofile.url }}' type='video/mp4'>Your browser does not support the video tag.</video>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

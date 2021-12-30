@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Online Voting System - Candidates{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card"">
+                <img src="{{detail.image.url}}" class="rounded" height="450px;">
+                <div class="card-body">
+                    <p class="card-text">Hi I'm <b>{{detail.student}}</b> a {{detail.student.course}} student under {{detail.student.course.program}} department. <br/>
+                        Running for <b>{{detail.position}}</b> under <b>{{detail.party}}</b> party</p> this {{detail.election}} election.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    {{detail.profile | safe}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
